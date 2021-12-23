@@ -1,3 +1,5 @@
+use core::default;
+
 use sgx_tstd::mem::*;
 use sgx_types::*;
 
@@ -12,6 +14,7 @@ pub const SGX_FILE_MINOR_VERSION: uint8_t = 0x00;
 //TODO: COMPILE_TIME_ASSERT
 
 #[repr(C)]
+#[derive(Default)]
 struct _meta_data_plain {
     fild_id: uint64_t,
     major_version: uint8_t,
@@ -38,7 +41,7 @@ struct _mc_uuid {
 pub type sgx_mc_uuid_t = _mc_uuid;
 
 #[repr(C)]
-struct _meta_data_encrypted {
+pub struct _meta_data_encrypted {
     clean_filename: [c_char; FILENAME_MAX_LEN],
     size: int64_t,
 
@@ -60,12 +63,26 @@ pub type meta_data_padding_t = [uint8_t;
         - (size_of::<meta_data_plain_t>() + size_of::<meta_data_encrypted_blob_t>())];
 
 #[repr(C)]
-struct _meta_data_node {
+pub struct _meta_data_node {
     plain_part: meta_data_plain_t,
     encrypted_part: meta_data_encrypted_blob_t,
     padding: meta_data_padding_t,
 }
 pub type meta_data_node_t = _meta_data_node;
+
+impl Default for meta_data_node_t {
+    fn default() -> Self {
+        Self {
+            plain_part: meta_data_plain_t::default(),
+            padding: [
+                0 as uint8_t;
+                META_DATA_NODE_SIZE
+                    - (size_of::<meta_data_plain_t>() + size_of::<meta_data_encrypted_blob_t>())
+            ],
+            encrypted_part: [0 as uint8_t; size_of::<meta_data_encrypted_t>()],
+        }
+    }
+}
 
 #[repr(C)]
 struct _data_node_crypto {

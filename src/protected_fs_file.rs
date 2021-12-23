@@ -1,6 +1,7 @@
+use sgx_tstd::{*, ffi::CString};
 use sgx_types::*;
 
-use crate::protected_fs_node::*;
+use crate::{lru_cache::*, protected_fs_node::*};
 
 enum protected_fs_status_e {
     SGX_FILE_STATUS_OK = 0,
@@ -68,6 +69,7 @@ struct _file_mht_node {
 
 pub type file_mht_node_t = _file_mht_node;
 
+#[allow(non_camel_case_types)]
 struct _file_data_node {
     _type: uint8_t,
     mht_node_number: uint64_t,
@@ -80,3 +82,44 @@ struct _file_data_node {
 }
 
 pub type file_data_node_t = _file_data_node;
+
+pub enum protected_fs_file_node {
+    meta_data_node {meta_data_node_number: uint64_t, file_meta_data: meta_data_node_t},
+    meta_data_recovery_node,
+}
+
+pub struct protected_fs_file {
+    pub node: protected_fs_file_node,
+    encyrpted_part_plain: meta_data_encrypted_t,
+
+    root_mht: file_mht_node_t,
+
+    // TODO: FILE
+    file: CString,
+    open_mode: open_mode_t,
+    read_only: uint8_t,
+    offset: int64_t,
+    end_of_file: bool,
+
+    real_file_size: int64_t,
+
+    need_writing: bool,
+    last_error: uint32_t,
+    file_status: protected_fs_status_e,
+
+    mutex: sgx_thread_mutex_t,
+
+    use_user_kdk_key: uint8_t,
+    user_kdk_key: sgx_aes_gcm_128bit_key_t,
+
+    cur_key: sgx_aes_gcm_128bit_key_t,
+    session_master_key: sgx_aes_gcm_128bit_key_t,
+    master_key_count: uint32_t,
+
+    recovery_filename: [c_char; RECOVERY_FILE_MAX_LEN],
+
+    cache: LruCache<u8>,
+
+    empty_iv: sgx_iv_t,
+    report: sgx_report_t,
+}
