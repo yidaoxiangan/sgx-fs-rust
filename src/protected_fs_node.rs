@@ -15,7 +15,7 @@ pub const SGX_FILE_MINOR_VERSION: uint8_t = 0x00;
 
 #[repr(C)]
 #[derive(Default)]
-struct _meta_data_plain {
+pub struct _meta_data_plain {
     fild_id: uint64_t,
     major_version: uint8_t,
     minor_version: uint8_t,
@@ -34,7 +34,7 @@ pub type meta_data_plain_t = _meta_data_plain;
 pub const FILENAME_MAX_LEN: size_t = 260;
 pub const MD_USER_DATA_SIZE: size_t = NODE_SIZE * 3 / 4;
 
-struct _mc_uuid {
+pub struct _mc_uuid {
     mcuuid: [uint8_t; 16],
 }
 
@@ -85,7 +85,7 @@ impl Default for meta_data_node_t {
 }
 
 #[repr(C)]
-struct _data_node_crypto {
+pub struct _data_node_crypto {
     key: sgx_aes_gcm_128bit_key_t,
     gmac: sgx_aes_gcm_128bit_tag_t,
 }
@@ -97,7 +97,7 @@ pub const CHILD_MHT_NODES_COUNT: size_t = NODE_SIZE / size_of::<gcm_crypto_data_
 //TODO: COMPILE_TIME_ASSERT
 
 #[repr(C)]
-struct _mht_node {
+pub struct _mht_node {
     data_nodes_crypto: [gcm_crypto_data_t; ATTACHED_DATA_NODES_COUNT],
     mht_nodes_crypto: [gcm_crypto_data_t; CHILD_MHT_NODES_COUNT],
 }

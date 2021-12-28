@@ -56,7 +56,7 @@ enum current_node {
     },
     recovery_node(recovery_node_t),
 }
-struct _file_mht_node {
+pub struct _file_mht_node {
     _type: uint8_t,
     mht_node_number: uint64_t,
     parent: *mut _file_mht_node,
@@ -70,7 +70,7 @@ struct _file_mht_node {
 pub type file_mht_node_t = _file_mht_node;
 
 #[allow(non_camel_case_types)]
-struct _file_data_node {
+pub struct _file_data_node {
     _type: uint8_t,
     mht_node_number: uint64_t,
     parent: *mut _file_data_node,
@@ -118,7 +118,7 @@ pub struct protected_fs_file {
 
     recovery_filename: [c_char; RECOVERY_FILE_MAX_LEN],
 
-    cache: LruCache<u8>,
+    cache: lru_cache<u8>,
 
     empty_iv: sgx_iv_t,
     report: sgx_report_t,

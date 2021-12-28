@@ -1,11 +1,11 @@
-use crate::lru_cache::LruCache;
+use crate::lru_cache::lru_cache;
 
 use super::super::protected_fs_file::*;
 use super::super::util::*;
 use sgx_tstd::vec::Vec;
 use sgx_tstd::io::{self, Write};
 pub fn test_lru_cache_add_and_remove() {
-    let mut my_cache = LruCache::new();
+    let mut my_cache = lru_cache::new();
 
     let entry_1 = vec![1];
     let entry_2 = vec![1,2];
@@ -13,7 +13,7 @@ pub fn test_lru_cache_add_and_remove() {
     my_cache.add(2, entry_2);
     my_cache.add(3,vec![1,2,3]);
     my_cache.print_all_keys_and_all_values();
-    let a = my_cache.get(1);
+    // let a = my_cache.get(1);
     my_cache.print_all_keys_and_all_values();
     my_cache.add(2,vec![2,1]);
     my_cache.print_all_keys_and_all_values();
@@ -29,7 +29,7 @@ pub fn test_lru_cache_add_and_remove() {
 }
 
 pub fn test_lru_cache_iter() {
-    let mut cache = LruCache::new();
+    let mut cache = lru_cache::new();
     cache.add(1,vec![1,1,1]);
     cache.add(2,vec![2,2,2]);
     cache.add(3,vec![3,3,3]);
