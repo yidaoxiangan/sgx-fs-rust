@@ -12,20 +12,19 @@ SGX 快速入门可以参考 https://sgx101.gitbook.io/sgx101/
 
 ### 开发环境
 + 启动命令：
-+ 数据挂载：
-  + `/root/dev/incubator-teaclave-sgx-sdk:/root/sgx`
-  + `/root/dev/sgx-rust:/root/dev/sgx-fs`
-
-+ 端口映射：
-  + `5000:22`
-### 测试环境
-+ 启动命令：
-  + `docker run -v /root/dev/incubator-teaclave-sgx-sdk:/root/sgx -v /root/dev/sgx-rust:/root/dev/sgx-fs -itd baiduxlab/sgx-rust /bin/bash`
+```sh
+docker run \
+-v /root/dev/incubator-teaclave-sgx-sdk:/root/sgx \
+-v /root/dev/sgx-rust:/root/dev/sgx-fs \
+-v /root/dev/sgx_tprotected_fs:/root/dev/sgx_tprotected_fs \
+-itd baiduxlab/sgx-rust /bin/bash
+```
 + 进入容器：
   + `docker exec -it d3e5 /bin/bash`
 + 数据挂载：
-  + `/root/dev/incubator-teaclave-sgx-sdk:/root/sgx`
+  + `/root/dev/incubator-teaclave-sgx-sdk:/root/sgx` 使用默认版本的sdk。 测试文件也在`samplecode`目录中编写。
   + `/root/dev/sgx-rust:/root/dev/sgx-fs`
+  + `/root/dev/sgx_tprotected_fs:/root/dev/sgx_tprotected_fs` 
 
 
 #### 测试流程

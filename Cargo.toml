@@ -7,5 +7,7 @@ edition = "2018"
 
 [dependencies]
 # sgx_tstd = { path = "../incubator-teaclave-sgx-sdk/sgx_tstd" }
-sgx_tstd = { path = "/root/tmp/incubator-teaclave-sgx-sdk/sgx_tstd" }
-sgx_types = { path = "/root/tmp/incubator-teaclave-sgx-sdk/sgx_types" }
+# sgx_tstd = {path = "/root/tmp/incubator-teaclave-sgx-sdk/sgx_tstd"}
+# sgx_types = {path = "/root/tmp/incubator-teaclave-sgx-sdk/sgx_types"}
+sgx_tstd = { path = "/root/sgx/sgx_tstd" }
+sgx_types = { path = "/root/sgx/sgx_types" }

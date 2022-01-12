@@ -20,6 +20,7 @@
   
   
 + [ ] `file_data_node_t* get_data_node();`
++ [] `file_mht_node_t* protected_fs_file::read_mht_node(uint64_t mht_node_number)`
 + [ ] `file_data_node_t* read_data_node();`
 + [ ] `file_data_node_t* append_data_node();`
 + [ ] `file_mht_node_t* get_mht_node();`

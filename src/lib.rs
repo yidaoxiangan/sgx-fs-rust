@@ -16,5 +16,6 @@ pub mod util;
 pub mod test;
 pub mod protected_fs_node;
 pub mod file_init;
+pub mod file_read_write;
 
 
